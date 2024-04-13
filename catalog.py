@@ -1,4 +1,4 @@
-from book import Book
+"""from book import Book
 
 class Catalog:
     def __init__(self):
@@ -15,4 +15,4 @@ class Catalog:
 
     def display_available_books(self):
         available_books = [book.title for book in self.books if not book.reserved]
-        print("Available books:", ", ".join(available_books))
+        print("Available books:", ", ".join(available_books))"""
