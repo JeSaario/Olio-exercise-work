@@ -1,18 +1,12 @@
-"""from book import Book
+from database import Database
 
 class Catalog:
     def __init__(self):
-        self.books = []
+        self.database = Database()
 
-    def add_book(self, book):
-        self.books.append(book)
+    def add_book(self, title, author, year):
+        self.database.add_book(title, author, year)
 
-    def search_by_title(self, title):
-        for book in self.books:
-            if book.title == title:
-                return book
-        return None
-
-    def display_available_books(self):
-        available_books = [book.title for book in self.books if not book.reserved]
-        print("Available books:", ", ".join(available_books))"""
+    def find_books_by_title(self, title):
+        found_books = [book for book in self.database.get_books() if title.lower() in book['title'].lower()]
+        return found_books
