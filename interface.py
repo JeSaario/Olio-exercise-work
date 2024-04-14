@@ -1,6 +1,7 @@
 # Importing necessary libraries
-# from library_system import Library # Importing the Library class from the library_system module
-# from getpass import getpass # Importing the getpass function to hide password input
+from library_system import Library # Importing the Library class from the library_system module
+from getpass import getpass # Importing the getpass function to hide password input
+
 
 def admin_menu(library):
     # Displaying the admin menu and handling user input
