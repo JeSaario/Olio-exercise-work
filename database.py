@@ -1,4 +1,3 @@
-
 class Book:
     def __init__(self, title, author):
         """
@@ -44,7 +43,7 @@ class Database:
         """
         Borrow a book with the given title by a member with the given member_id.
         """
-        # Make sure to use a generator to find the book
+        #Make sure to use a generator to find the book
         book = next((b for b in self.books if b.title == title and not b.borrowed), None)
         if book and member_id in self.members:
             member = self.members[member_id]
