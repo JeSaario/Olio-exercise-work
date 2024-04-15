@@ -1,4 +1,4 @@
-from database import Database
+'''from database import Database
 
 class Catalog:
     def __init__(self):
@@ -25,4 +25,4 @@ class Catalog:
         :return: A list of books with titles containing the given string.
         """
         found_books = [book for book in self.database.get_books() if title.lower() in book['title'].lower()]
-        return found_books
+        return found_books'''

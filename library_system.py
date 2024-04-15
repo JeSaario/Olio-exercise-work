@@ -63,3 +63,11 @@ class Library:
         for book in self.books:
             status = "Available" if not book.borrowed else "Borrowed"
             print(f"{book.title} by {book.author} - {status}")
+
+    def view_books(self):
+        for book in self.books:
+            if not book.borrowed:
+                status = "Available"
+            else:
+                status = "Borrowed by: " + book.borrower.name if book.borrower else "Unknown"
+            print(f"{book.title} by {book.author} - {status}")
