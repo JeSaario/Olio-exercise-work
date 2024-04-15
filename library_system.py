@@ -21,7 +21,7 @@ class Library:
     def __init__(self, db):
         self.db = db  #Database object for data persistence
         self.members = {}  #store members with member_id as the key
-        self.books = [] 
+        self.books = self.db.get_books()  #Load books from the database
 
     def add_book(self, title, author):
         self.db.add_book(Book(title, author))  #Add to database
@@ -58,3 +58,8 @@ class Library:
     
     def get_all_books(self): 
         return self.db.get_books()  #Retrieve all books in the library
+    
+    def view_books(self):
+        for book in self.books:
+            status = "Available" if not book.borrowed else "Borrowed"
+            print(f"{book.title} by {book.author} - {status}")

@@ -5,9 +5,21 @@ class Book:
         """
         self.title = title
         self.author = author
-        self.borrowed = False
+        self.borrowed = False # Initialize book as available
         self.borrower = None
         self.due_date = None
+
+    def borrow_book(self):
+        if not self.borrowed:
+            self.borrowed = True
+            return True
+        return False
+
+    def return_book(self):
+        if self.borrowed:
+            self.borrowed = False
+            return True
+        return False
 
 class FictionBook(Book):
     def __init__(self, title, author, genre):
@@ -18,15 +30,6 @@ class NonFictionBook(Book):
     def __init__(self, title, author, subject):
         super().__init__(title, author)
         self.subject = subject
-
-class Member:
-    def __init__(self, member_id, name, password):
-        """
-        Initialize a new Member object with the given member_id, name, and password.
-        """
-        self.member_id = member_id
-        self.name = name
-        self.password = password
 
 class Database:
     def __init__(self):
