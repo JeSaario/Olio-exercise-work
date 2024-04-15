@@ -2,7 +2,7 @@ from library_system import Library
 from getpass import getpass
 
 
-def admin_menu(library):
+def admin_menu(library, books):
     #Displaying the admin menu and handling user input
     while True:
         print("\nAdmin Menu:")
@@ -23,14 +23,13 @@ def admin_menu(library):
             password = getpass("Enter a password: ")
             library.add_member(member_id, name, password)
         elif choice == '3':
-            books = library.get_all_books()  #get all books
             print("\nAll Books:")
             for book in books:
                 print(f"{book.title} by {book.author} - {'Borrowed' if book.borrowed else 'Available'}")
         elif choice == '4':
             break
 
-def user_menu(library):
+def user_menu(library, books):
     #Handling user login and displaying the user menu
     member_id = input("Enter your member ID: ")
     password = getpass("Enter your password: ")
@@ -58,7 +57,6 @@ def user_menu(library):
                 else:
                     print("You did not borrow this book or it does not exist.")
             elif choice == '3':
-                books = library.get_all_books()  #get all books
                 print("\nAll Books:")
                 for book in books:
                     print(f"{book.title} by {book.author}")
@@ -68,6 +66,7 @@ def user_menu(library):
         print("Invalid credentials.")
 
 def main(library):
+    books = library.get_all_books() #Retrieves all of the books
     #Displaying the main menu and handling user input
     while True:
         print("\nMain Menu:")
@@ -76,9 +75,9 @@ def main(library):
         print("3. Exit")
         choice = input("Enter your role or exit: ")
         if choice == '1':
-            admin_menu(library)
+            admin_menu(library, books)
         elif choice == '2':
-            user_menu(library)
+            user_menu(library, books)
         elif choice == '3':
             print("Exiting...")
             break
