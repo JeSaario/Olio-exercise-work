@@ -1,5 +1,6 @@
 from book import FictionBook, NonFictionBook
 from member import Member
+import datetime
 
 class Library:
     def __init__(self, db):
@@ -27,15 +28,16 @@ class Library:
             print("Invalid book type.")
             return
 
-        self.db.add_book(new_book)  #Add to database
-        self.books.append(new_book)  #Add to library
+        self.db.add_book(new_book)
+        self.books.append(new_book)
         print("Book added successfully.")
 
-
     def add_member(self, member_id, name, password):
-        self.db.add_member(Member(member_id, name, password))  #Add a new member to the database
-        self.members[member_id] = Member(member_id, name, password)  #Add the new member to the library's dictionary of members
-    
+        """
+        Add a new member to the library's database and dictionary of members.
+        """
+        self.db.add_member(Member(member_id, name, password))
+        self.members[member_id] = Member(member_id, name, password)
 
     def borrow_book(self, title, member_id):
         """
@@ -46,7 +48,8 @@ class Library:
             member = self.members.get(member_id)
             if member:
                 book.borrowed = True
-                book.borrower = member  #Assign the borrower to the book
+                book.borrower = member
+                book.borrowed_date = datetime.datetime.now()  #Set the borrowed date
                 return True
         return False
 
@@ -58,62 +61,52 @@ class Library:
         if book and book.borrower.member_id == member_id:
             book.borrowed = False
             book.borrower = None
+            book.borrowed_date = None #resetting date
             return True
         return False
 
     def search_books(self, query=""):
-        return self.db.search_books(query)  #Search for books in the database based on the given query
+        """
+        Search for books in the library based on the given query.
+        """
+        return self.db.search_books(query)
 
     def validate_member(self, member_id, password):
+        """
+        Validate a member's credentials based on their member_id and password.
+        """
         member = self.members.get(member_id)
-        if member and member.password == password:  #Check if the member exists and the password is correct
+        if member and member.password == password:
             return member
         return None
     
-    def get_all_books(self): 
-        return self.db.get_all_books()  #Retrieve all books in the library
+    def get_all_books(self):
+        """
+        Retrieve all books in the library.
+        """
+        return self.db.get_all_books()
     
-    def add_book(self, title, author, book_type):
-        """
-        Add a new book to the library and database if it does not already exist.
-        """
-        #Check if a book with the same title and author exists
-        if any(b.title == title and b.author == author for b in self.books):
-            print("Book already exists in the library.")
-            return
-
-        if book_type.lower() == "fiction": #Convert book_type to lowercase for comparison
-            new_book = FictionBook(title, author, "Fiction")
-        elif book_type.lower() == "non-fiction":
-            new_book = NonFictionBook(title, author, "Non-Fiction")
-        else:
-            print("Invalid book type.")
-            return
-
-        self.db.add_book(new_book)  #Add to database
-        self.books.append(new_book)  #Add to library
-        print("Book added successfully.")
-
     def view_books(self):
         """
         Display all books in the library with their details.
         """
         print("\nAll Books:")
-        for book in self.books:  #Iterate through each book in the library
-            if isinstance(book, FictionBook):  #Check if the book is fiction
+        for book in self.books:
+            if isinstance(book, FictionBook):
                 book_type = "Fiction"
             elif isinstance(book, NonFictionBook):
                 book_type = "Non-Fiction"
             else:
-                book_type = "Unknown Type"  #Handle unknown book types
+                book_type = "Unknown Type"
 
-            status = "Borrowed" if book.borrowed else "Available"  #Check book availability
+            status = "Borrowed" if book.borrowed else "Available"
             print(f"{book.title} by {book.author} - Type: {book_type} - Status: {status}")
 
-  #Check if the book is borrowed
-            if book.borrowed:
-                availability = f"Borrowed by {book.borrower.name}"
-            else:
-                availability = "Available"
-
-            print(f"{book.title} by {book.author} - Type: {book_type} - Status: {availability}")
+    def view_borrowed_books(self, member_id):
+        """
+        Display borrowed books for a member along with their borrowing dates.
+        """
+        print("\nBorrowed Books:")
+        borrowed_books = [book for book in self.books if book.borrowed and book.borrower.member_id == member_id]
+        for book in borrowed_books:
+            print(f"{book.title} by {book.author} - Borrowed Date: {book.borrowed_date}")

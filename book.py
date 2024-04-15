@@ -8,12 +8,13 @@ class Book:
         self.title = title
         self.author = author
         self.borrowed = False #Initialize book as available
-        self.date = datetime.date
+        self.date = None #initialixe to none
 
     def borrow_book(self, member_id):
         if not self.borrowed:
             self.borrowed = True
             self.borrower_id = member_id
+            self.borrowed_date = datetime.datetime.now()  #Set the borrowed date and time
             return True
         return False
 
