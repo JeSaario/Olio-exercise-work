@@ -26,27 +26,27 @@ def admin_menu(library):
         print("4. Return to main menu")
         choice = input("Choose an action: ")
         if choice == '1':
-            # Getting book details and adding a new book to the library
+            #Getting book details and adding a new book to the library
             title = input("Enter the book title: ")
             author = input("Enter the author: ")
             library.add_book(title, author)  # Pass title and author to add_book method in Library
         elif choice == '2':
-            # Getting member details and adding a new member to the library
+            #Getting member details and adding a new member to the library
             member_id = input("Enter the member ID: ")
             name = input("Enter the member name: ")
             password = getpass("Enter a password: ")
-            library.add_member(member_id, name, password)  # Pass member details to add_member method in Library
+            library.add_member(member_id, name, password)  # ass member details to add_member method in Library
         elif choice == '3':
             print("\nAll Books:")
-            library.view_books()  # Call view_books method in Library to display all books
+            library.view_books()  #Call view_books method in Library to display all books
         elif choice == '4':
             break
 
 def user_menu(library):
-    # Handle user login and display the user menu
+    #Handle user login and display the user menu
     member_id = input("Enter your member ID: ")
     password = getpass("Enter your password: ")
-    member = library.validate_member(member_id, password)
+    member = library.validate_member(member_id, password)  #Validate user credentials
     if member:
         while True:
             print("\nUser Menu:")
@@ -58,20 +58,23 @@ def user_menu(library):
             choice = input("Choose an action: ")
             if choice == '1':
                 title = input("Enter the book title to borrow: ")
+                #Borrow a book and provide feedback
                 if library.borrow_book(title, member_id):
                     print("Book borrowed successfully.")
                 else:
                     print("This book is either not available or does not exist.")
             elif choice == '2':
                 title = input("Enter the book title to return: ")
+                #Return a book and provide feedback
                 if library.return_book(title, member_id):
                     print("Book returned successfully.")
                 else:
                     print("You did not borrow this book or it does not exist.")
             elif choice == '3':
-                library.view_books()
+                library.view_books()  #View all available books
             elif choice == '4':
                 print("\nBorrowed Books:")
+                #View books borrowed by the user
                 borrowed_books = [book for book in library.get_all_books() if book.borrowed and book.borrower.member_id == member_id]
                 if borrowed_books:
                     for book in borrowed_books:
@@ -85,7 +88,7 @@ def user_menu(library):
 
 
 def main(library):
-    # Display main menu and handle user input
+    #Display main menu and handle user input
     while True:
         print("\nMain Menu:")
         print("1. Admin")
@@ -93,12 +96,13 @@ def main(library):
         print("3. Exit")
         choice = input("Enter your role or exit: ")
         if choice == '1':
-            admin_menu(library)
+            admin_menu(library)  #Go to admin menu
         elif choice == '2':
-            user_menu(library)
+            user_menu(library)  #Go to user menu
         elif choice == '3':
             print("Exiting...")
             break
+
 
 if __name__ == "__main__":
     from database import Database
