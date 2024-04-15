@@ -51,12 +51,14 @@ class Library:
                 return True
         return False
 
-
     def return_book(self, title, member_id):
-        book = next((b for b in self.members[member_id].loans if b.title == title), None)  #Find the book with the given title in the member's list of loans
-        if book:
-            book.borrowed = False  
-            self.members[member_id].loans.remove(book)  #Remove the book from the member's list of loans
+        """
+        Return a book with the given title by a member with the given member_id.
+        """
+        book = next((b for b in self.books if b.title == title and b.borrower and b.borrower.member_id == member_id), None)
+        if book and book.borrower.member_id == member_id:
+            book.borrowed = False
+            book.borrower = None
             return True
         return False
 
