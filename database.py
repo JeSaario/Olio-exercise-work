@@ -9,6 +9,16 @@ class Book:
         self.borrower = None
         self.due_date = None
 
+class FictionBook(Book):
+    def __init__(self, title, author, genre):
+        super().__init__(title, author)  #Call constructor of parent class to initialize title and author
+        self.genre = genre
+
+class NonFictionBook(Book):
+    def __init__(self, title, author, subject):
+        super().__init__(title, author)
+        self.subject = subject
+
 class Member:
     def __init__(self, member_id, name, password):
         """
