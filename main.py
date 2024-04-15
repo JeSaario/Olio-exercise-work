@@ -1,7 +1,7 @@
 from interface import main
 
 if __name__ == "__main__":
-    from library import Library
+    from library_system import Library
     from database import Database
 
     db = Database()

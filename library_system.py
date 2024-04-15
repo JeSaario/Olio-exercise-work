@@ -1,6 +1,12 @@
-from book import FictionBook, NonFictionBook
-from member import Member
+from database import FictionBook, NonFictionBook
 import datetime
+
+class Member:
+    def __init__(self, member_id, name, password):
+        self.member_id = member_id
+        self.name = name 
+        self.password = password 
+        self.loans = []  #List of books currently borrowed by the member
 
 class Library:
     def __init__(self, db):
