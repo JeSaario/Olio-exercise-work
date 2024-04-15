@@ -63,7 +63,7 @@ class Library:
         return None
     
     def get_all_books(self): 
-        return self.db.get_books()  #Retrieve all books in the library
+        return self.db.get_all_books()  #Retrieve all books in the library
 
     def view_books(self):
         for book in self.books:

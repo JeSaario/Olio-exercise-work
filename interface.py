@@ -2,7 +2,6 @@ from library_system import Library
 from getpass import getpass
 
 def admin_menu(library):
-    #Display admin menu options and handle user input
     while True:
         print("\nAdmin Menu:")
         print("1. Add a new book")
@@ -11,16 +10,19 @@ def admin_menu(library):
         print("4. Return to main menu")
         choice = input("Choose an action: ")
         if choice == '1':
+            # Getting book details and adding a new book to the library
             title = input("Enter the book title: ")
             author = input("Enter the author: ")
-            library.add_book(title, author)
+            library.add_book(title, author)  # Pass title and author to add_book method in Library
         elif choice == '2':
+            # Getting member details and adding a new member to the library
             member_id = input("Enter the member ID: ")
             name = input("Enter the member name: ")
             password = getpass("Enter a password: ")
-            library.add_member(member_id, name, password)
+            library.add_member(member_id, name, password)  # Pass member details to add_member method in Library
         elif choice == '3':
-            library.view_books()
+            print("\nAll Books:")
+            library.view_books()  # Call view_books method in Library to display all books
         elif choice == '4':
             break
 
@@ -35,7 +37,8 @@ def user_menu(library):
             print("1. Borrow a book")
             print("2. Return a book")
             print("3. View all books")
-            print("4. Exit")
+            print("4. View borrowed books")
+            print("5. Exit")
             choice = input("Choose an action: ")
             if choice == '1':
                 title = input("Enter the book title to borrow: ")
@@ -52,6 +55,14 @@ def user_menu(library):
             elif choice == '3':
                 library.view_books()
             elif choice == '4':
+                print("\nBorrowed Books:")
+                borrowed_books = [book for book in books if book.borrower == member]
+                if borrowed_books:
+                    for book in borrowed_books:
+                        print(f"{book.title} by {book.author}")
+                else:
+                    print("You have not borrowed any books yet.")
+            elif choice == '5':
                 break
     else:
         print("Invalid credentials.")
@@ -67,7 +78,7 @@ def main(library):
         if choice == '1':
             admin_menu(library)
         elif choice == '2':
-            user_menu(library)
+            user_menu(library, library.get_all_books())
         elif choice == '3':
             print("Exiting...")
             break
