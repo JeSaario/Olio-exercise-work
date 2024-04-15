@@ -80,7 +80,7 @@ def user_menu(library):
                 borrowed_books = [book for book in library.get_all_books() if book.borrowed and book.borrower.member_id == member_id]
                 if borrowed_books:
                     for book in borrowed_books:
-                        print(f"{book.title} by {book.author}")
+                        print(f"{book.title} by {book.author} was borrowed on: {book.borrowed_date}")
                 else:
                     print("You have not borrowed any books yet.")
             elif choice == '5':
