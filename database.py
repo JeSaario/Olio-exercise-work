@@ -6,8 +6,7 @@ class Book:
         self.title = title
         self.author = author
         self.borrowed = False # Initialize book as available
-        self.borrower = None
-        self.due_date = None
+        #self.due_date = None
 
     def borrow_book(self):
         if not self.borrowed:
@@ -90,7 +89,7 @@ class Database:
         if member and member.password == password:
             return member
         return None
-    
+        
     def get_books(self):
         """
         Retrieve all books stored in the database.

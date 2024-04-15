@@ -8,14 +8,14 @@ class Member:
         self.password = password 
         self.loans = []  #List of books currently borrowed by the member
 
-    def calculate_fines(self):
+    '''def calculate_fines(self):
         today = datetime.now()  #Get the current date and time
         fine_total = 0 
         for loan in self.loans:
             if loan.due_date < today:
                 overdue_days = (today - loan.due_date).days  #Calculate the number of days the book is overdue
                 fine_total += 1 * overdue_days  #Fine is 1€/day
-        return fine_total
+        return fine_total'''
 
 class Library:
     def __init__(self, db):
@@ -43,7 +43,7 @@ class Library:
         book = next((b for b in self.members[member_id].loans if b.title == title), None)  #Find the book with the given title in the member's list of loans
         if book:
             book.borrowed = False  
-            self.members[member_id].loans.remove(book)  # Remove the book from the member's list of loans
+            self.members[member_id].loans.remove(book)  #Remove the book from the member's list of loans
             return True
         return False
 
@@ -58,11 +58,6 @@ class Library:
     
     def get_all_books(self): 
         return self.db.get_books()  #Retrieve all books in the library
-    
-    def view_books(self):
-        for book in self.books:
-            status = "Available" if not book.borrowed else "Borrowed"
-            print(f"{book.title} by {book.author} - {status}")
 
     def view_books(self):
         for book in self.books:
