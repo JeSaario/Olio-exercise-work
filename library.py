@@ -1,12 +1,5 @@
-import datetime
-from database import Book, FictionBook, NonFictionBook
-
-class Member:
-    def __init__(self, member_id, name, password):
-        self.member_id = member_id
-        self.name = name 
-        self.password = password 
-        self.loans = []  #List of books currently borrowed by the member
+from book import FictionBook, NonFictionBook
+from member import Member
 
 class Library:
     def __init__(self, db):
@@ -18,12 +11,12 @@ class Library:
         """
         Add a new book to the library and database if it does not already exist.
         """
-        # Check if a book with the same title and author exists
+        #Check if a book with the same title and author exists
         if any(b.title == title and b.author == author for b in self.books):
             print("Book already exists in the library.")
             return
 
-        # Convert book_type to lowercase for comparison
+        #Convert book_type to lowercase for comparison
         book_type_lower = book_type.lower()
 
         if book_type_lower == "fiction":
@@ -34,8 +27,8 @@ class Library:
             print("Invalid book type.")
             return
 
-        self.db.add_book(new_book)  # Add to database
-        self.books.append(new_book)  # Add to library
+        self.db.add_book(new_book)  #Add to database
+        self.books.append(new_book)  #Add to library
         print("Book added successfully.")
 
 
@@ -106,15 +99,18 @@ class Library:
         Display all books in the library with their details.
         """
         print("\nAll Books:")
-        for book in self.books:
-            if isinstance(book, FictionBook):
+        for book in self.books:  #Iterate through each book in the library
+            if isinstance(book, FictionBook):  #Check if the book is fiction
                 book_type = "Fiction"
             elif isinstance(book, NonFictionBook):
                 book_type = "Non-Fiction"
             else:
-                book_type = "Unknown Type"
+                book_type = "Unknown Type"  #Handle unknown book types
 
-  # Check if the book is borrowed
+            status = "Borrowed" if book.borrowed else "Available"  #Check book availability
+            print(f"{book.title} by {book.author} - Type: {book_type} - Status: {status}")
+
+  #Check if the book is borrowed
             if book.borrowed:
                 availability = f"Borrowed by {book.borrower.name}"
             else:

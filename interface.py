@@ -1,6 +1,4 @@
-from library_system import Library
 from getpass import getpass
-
 
 def admin_login():
     #Simple login made for admin
@@ -29,12 +27,10 @@ def admin_menu(library):
             if choice == '1':
                 title = input("Enter the book title: ")
                 author = input("Enter the author: ")
-                book_type = "fiction"
-                library.add_book(title, author, book_type)  #Specify book type as fiction
+                library.add_book(title, author, "fiction")  #Specify book type as fiction
             elif choice == '2':
                 title = input("Enter the book title: ")
                 author = input("Enter the author: ")
-                #book_type = "nonfiction"
                 library.add_book(title, author, "non-fiction")  #Specify book type as non-fiction
             elif choice == '3':
                 member_id = input("Enter the member ID: ")
@@ -107,11 +103,3 @@ def main(library):
         elif choice == '3':
             print("Exiting...")
             break
-
-
-if __name__ == "__main__":
-    from database import Database
-    db = Database()
-    library = Library(db)
-    main(library)
-
