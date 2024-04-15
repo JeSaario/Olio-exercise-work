@@ -18,25 +18,25 @@ class Library:
         """
         Add a new book to the library and database if it does not already exist.
         """
-        print(f"Received book type: {book_type}")  # Debug print
-
-        # Check if the book already exists in any form
+        # Check if a book with the same title and author exists
         if any(b.title == title and b.author == author for b in self.books):
             print("Book already exists in the library.")
             return
 
-        # Create the appropriate book instance based on book_type
-        if book_type.lower() == "fiction":  # Convert to lowercase for comparison
+        # Convert book_type to lowercase for comparison
+        book_type_lower = book_type.lower()
+
+        if book_type_lower == "fiction":
             new_book = FictionBook(title, author, "Fiction")
-        elif book_type.lower() == "nonfiction":  # Convert to lowercase for comparison
+        elif book_type_lower == "non-fiction":
             new_book = NonFictionBook(title, author, "Non-Fiction")
         else:
-            raise ValueError("Invalid book type specified.")
+            print("Invalid book type.")
+            return
 
-        # Add the book to the library and database
-        self.db.add_book(new_book)
-        self.books.append(new_book)
-        print(f"Added {book_type.capitalize()} Book: {title} by {author}")
+        self.db.add_book(new_book)  # Add to database
+        self.books.append(new_book)  # Add to library
+        print("Book added successfully.")
 
 
     def add_member(self, member_id, name, password):
