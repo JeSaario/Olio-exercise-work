@@ -1,7 +1,23 @@
 from library_system import Library
 from getpass import getpass
 
+
+def admin_login():
+    #Simple login made for admin
+    admin_username = "admin"
+    admin_password = "admin"
+    username_input = input("Enter admin username: ")
+    password_input = getpass("Enter admin password: ")
+    if username_input == admin_username and password_input == admin_password:
+        return True
+    else:
+        print("Invalid admin credentials.")
+        return False
+
 def admin_menu(library):
+    #Displaying the admin menu and handling admin and user input
+    if not admin_login():
+        return
     while True:
         print("\nAdmin Menu:")
         print("1. Add a new book")

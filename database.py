@@ -6,7 +6,6 @@ class Book:
         self.title = title
         self.author = author
         self.borrowed = False # Initialize book as available
-        #self.due_date = None
 
     """def borrow_book(self):
         if not self.borrowed:
@@ -94,4 +93,4 @@ class Database:
         """
         Retrieve all books stored in the database.
         """
-        return list(set(self.books))  # Use a set to remove duplicates and then convert back to a list
+        return list(set(self.books))  #Use a set to remove duplicates and then convert back to a list
