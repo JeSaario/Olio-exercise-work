@@ -1,5 +1,5 @@
 import datetime
-from database import Book
+from database import Book, FictionBook, NonFictionBook
 
 class Member:
     def __init__(self, member_id, name, password):
@@ -23,7 +23,7 @@ class Library:
         self.members = {}  #store members with member_id as the key
         self.books = self.db.get_all_books()  #Load books from the database
 
-    def add_book(self, title, author):
+    def add_book(self, title, author, book_type):
         """
         Add a new book to the library and database if it does not already exist.
         """
@@ -31,6 +31,21 @@ class Library:
         if not any(b.title == new_book.title for b in self.books):
             self.db.add_book(new_book)  # Add to database
             self.books.append(new_book)  # Add to library
+
+        if book_type == "fiction":
+            new_book = FictionBook(title, author, "Fiction")
+        elif book_type == "nonfiction":
+            new_book = NonFictionBook(title, author, "Non-Fiction")
+        else:
+            raise ValueError("Invalid book type specified.")
+
+        if not any(b.title == new_book.title for b in self.books):
+            self.db.add_book(new_book)
+            self.books.append(new_book)
+            print(f"Added {book_type.capitalize()} Book: {title} by {author}")
+        else:
+            print("Book already exists in the library.")
+
 
 
     def add_member(self, member_id, name, password):

@@ -1,3 +1,5 @@
+import datetime
+
 class Book:
     def __init__(self, title, author):
         """
@@ -5,29 +7,42 @@ class Book:
         """
         self.title = title
         self.author = author
-        self.borrowed = False # Initialize book as available
+        self.borrowed = False #Initialize book as available
+        self.date = datetime.date
 
-    """def borrow_book(self):
+    def borrow_book(self, member_id):
         if not self.borrowed:
             self.borrowed = True
+            self.borrower_id = member_id
             return True
         return False
 
-    def return_book(self):
-        if self.borrowed:
-            self.borrowed = False
-            return True 
-        return False"""
-
 class FictionBook(Book):
     def __init__(self, title, author, genre):
-        super().__init__(title, author)  #Call constructor of parent class to initialize title and author
+        super().__init__(title, author)
         self.genre = genre
+
+    def borrow_book(self, member_id):
+        #Custom implementation for borrowing a fiction book
+        if not self.borrowed:
+            self.borrowed = True
+            self.borrower_id = member_id
+            return True
+        return False
 
 class NonFictionBook(Book):
     def __init__(self, title, author, subject):
         super().__init__(title, author)
         self.subject = subject
+
+    def borrow_book(self, member_id):
+        # Custom implementation for borrowing a non-fiction book
+        if not self.borrowed:
+            self.borrowed = True
+            self.borrower_id = member_id
+            return True
+        return False
+
 
 class Database:
     def __init__(self):

@@ -35,7 +35,7 @@ def admin_menu(library):
             member_id = input("Enter the member ID: ")
             name = input("Enter the member name: ")
             password = getpass("Enter a password: ")
-            library.add_member(member_id, name, password)  # ass member details to add_member method in Library
+            library.add_member(member_id, name, password)  #add member details to add_member method in Library
         elif choice == '3':
             print("\nAll Books:")
             library.view_books()  #Call view_books method in Library to display all books
