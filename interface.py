@@ -22,8 +22,9 @@ def admin_menu(library):
         print("\nAdmin Menu:")
         print("1. Add a new fiction book")
         print("2. Add a new non-fiction book")
-        print("3. View all books")
-        print("4. Return to main menu")
+        print("3. Add a new member")
+        print("4. View all books")
+        print("5. Return to main menu")
         choice = input("Choose an action: ")
         if choice == '1':
             title = input("Enter the book title: ")
@@ -34,8 +35,13 @@ def admin_menu(library):
             author = input("Enter the author: ")
             library.add_book(title, author, "nonfiction")  # Specify book type as non-fiction
         elif choice == '3':
-            library.view_books()
+            member_id = input("Enter the member ID: ")
+            name = input("Enter the member name: ")
+            password = getpass("Enter a password: ")
+            library.add_member(member_id, name, password)
         elif choice == '4':
+            library.view_books()
+        elif choice == '5':
             break
 
 
