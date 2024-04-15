@@ -27,7 +27,7 @@ def admin_menu(library):
             break
 
 def user_menu(library):
-    #Handle user login and display the user menu
+    # Handle user login and display the user menu
     member_id = input("Enter your member ID: ")
     password = getpass("Enter your password: ")
     member = library.validate_member(member_id, password)
@@ -56,7 +56,7 @@ def user_menu(library):
                 library.view_books()
             elif choice == '4':
                 print("\nBorrowed Books:")
-                borrowed_books = [book for book in books if book.borrower == member]
+                borrowed_books = [book for book in library.get_all_books() if book.borrowed and book.borrower.member_id == member_id]
                 if borrowed_books:
                     for book in borrowed_books:
                         print(f"{book.title} by {book.author}")
@@ -67,8 +67,9 @@ def user_menu(library):
     else:
         print("Invalid credentials.")
 
+
 def main(library):
-    #Display main menu and handle user input
+    # Display main menu and handle user input
     while True:
         print("\nMain Menu:")
         print("1. Admin")
@@ -78,7 +79,7 @@ def main(library):
         if choice == '1':
             admin_menu(library)
         elif choice == '2':
-            user_menu(library, library.get_all_books())
+            user_menu(library)
         elif choice == '3':
             print("Exiting...")
             break
@@ -88,3 +89,4 @@ if __name__ == "__main__":
     db = Database()
     library = Library(db)
     main(library)
+

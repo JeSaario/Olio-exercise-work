@@ -36,14 +36,21 @@ class Library:
     def add_member(self, member_id, name, password):
         self.db.add_member(Member(member_id, name, password))  #Add a new member to the database
         self.members[member_id] = Member(member_id, name, password)  #Add the new member to the library's dictionary of members
+    
 
     def borrow_book(self, title, member_id):
-        book = next((b for b in self.books if b.title == title and not b.borrowed), None)  #Find the book with the given title that is not currently borrowed
+        """
+        Borrow a book with the given title by a member with the given member_id.
+        """
+        book = next((b for b in self.books if b.title == title and not b.borrowed), None)
         if book:
-            book.borrowed = True
-            self.members[member_id].loans.append(book)  #Add the book to the member's list of loans
-            return True
-        return False  
+            member = self.members.get(member_id)
+            if member:
+                book.borrowed = True
+                book.borrower = member  #Assign the borrower to the book
+                return True
+        return False
+
 
     def return_book(self, title, member_id):
         book = next((b for b in self.members[member_id].loans if b.title == title), None)  #Find the book with the given title in the member's list of loans
