@@ -8,15 +8,6 @@ class Member:
         self.password = password 
         self.loans = []  #List of books currently borrowed by the member
 
-    '''def calculate_fines(self):
-        today = datetime.now()  #Get the current date and time
-        fine_total = 0 
-        for loan in self.loans:
-            if loan.due_date < today:
-                overdue_days = (today - loan.due_date).days  #Calculate the number of days the book is overdue
-                fine_total += 1 * overdue_days  #Fine is 1€/day
-        return fine_total'''
-
 class Library:
     def __init__(self, db):
         self.db = db  #Database object for data persistence
@@ -27,11 +18,12 @@ class Library:
         """
         Add a new book to the library and database if it does not already exist.
         """
-        new_book = Book(title, author)
-        if not any(b.title == new_book.title for b in self.books):
-            self.db.add_book(new_book)  # Add to database
-            self.books.append(new_book)  # Add to library
+        # Check if the book already exists in any form
+        if any(b.title == title and b.author == author for b in self.books):
+            print("Book already exists in the library.")
+            return
 
+        # Create the appropriate book instance based on book_type
         if book_type == "fiction":
             new_book = FictionBook(title, author, "Fiction")
         elif book_type == "nonfiction":
@@ -39,13 +31,10 @@ class Library:
         else:
             raise ValueError("Invalid book type specified.")
 
-        if not any(b.title == new_book.title for b in self.books):
-            self.db.add_book(new_book)
-            self.books.append(new_book)
-            print(f"Added {book_type.capitalize()} Book: {title} by {author}")
-        else:
-            print("Book already exists in the library.")
-
+        # Add the book to the library and database
+        self.db.add_book(new_book)
+        self.books.append(new_book)
+        print(f"Added {book_type.capitalize()} Book: {title} by {author}")
 
 
     def add_member(self, member_id, name, password):
@@ -88,12 +77,38 @@ class Library:
     
     def get_all_books(self): 
         return self.db.get_all_books()  #Retrieve all books in the library
+    
+    def add_book(self, title, author, book_type):
+        """
+        Add a new book to the library and database if it does not already exist.
+        """
+        # Check if a book with the same title and author exists
+        if any(b.title == title and b.author == author for b in self.books):
+            print("Book already exists in the library.")
+            return
+
+        if book_type.lower() == "fiction":
+            new_book = FictionBook(title, author, "Fiction")
+        elif book_type.lower() == "non-fiction":
+            new_book = NonFictionBook(title, author, "Non-Fiction")
+        else:
+            print("Invalid book type.")
+            return
+
+        self.db.add_book(new_book)  # Add to database
+        self.books.append(new_book)  # Add to library
+        print("Book added successfully.")
 
     def view_books(self):
+        """
+        Display all books in the library with their details.
+        """
+        print("\nAll Books:")
         for book in self.books:
-            book_type = "Fiction" if isinstance(book, FictionBook) else "Non-Fiction"
-            if not book.borrowed:
-                status = "Available"
+            if isinstance(book, FictionBook):
+                book_type = "Fiction"
+            elif isinstance(book, NonFictionBook):
+                book_type = "Non-Fiction"
             else:
-                status = f"Borrowed by: {book.borrower.name}" if book.borrower else "Borrowed (Unknown)"
-            print(f"{book.title} by {book.author} - {status} - {book_type}")
+                book_type = "Unknown Type"
+            print(f"{book.title} by {book.author} - Type: {book_type}")

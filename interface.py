@@ -19,30 +19,32 @@ def admin_menu(library):
     if not admin_login():
         return
     while True:
-        print("\nAdmin Menu:")
-        print("1. Add a new fiction book")
-        print("2. Add a new non-fiction book")
-        print("3. Add a new member")
-        print("4. View all books")
-        print("5. Return to main menu")
-        choice = input("Choose an action: ")
-        if choice == '1':
-            title = input("Enter the book title: ")
-            author = input("Enter the author: ")
-            library.add_book(title, author, "fiction")  # Specify book type as fiction
-        elif choice == '2':
-            title = input("Enter the book title: ")
-            author = input("Enter the author: ")
-            library.add_book(title, author, "nonfiction")  # Specify book type as non-fiction
-        elif choice == '3':
-            member_id = input("Enter the member ID: ")
-            name = input("Enter the member name: ")
-            password = getpass("Enter a password: ")
-            library.add_member(member_id, name, password)
-        elif choice == '4':
-            library.view_books()
-        elif choice == '5':
-            break
+            print("\nAdmin Menu:")
+            print("1. Add a new fiction book")
+            print("2. Add a new non-fiction book")
+            print("3. Add a new member")
+            print("4. View all books")
+            print("5. Return to main menu")
+            choice = input("Choose an action: ")
+            if choice == '1':
+                title = input("Enter the book title: ")
+                author = input("Enter the author: ")
+                book_type = "fiction"
+                library.add_book(title, author, book_type)  # Specify book type as fiction
+            elif choice == '2':
+                title = input("Enter the book title: ")
+                author = input("Enter the author: ")
+                book_type = "nonfiction"
+                library.add_book(title, author, book_type)  # Specify book type as non-fiction
+            elif choice == '3':
+                member_id = input("Enter the member ID: ")
+                name = input("Enter the member name: ")
+                password = getpass("Enter a password: ")
+                library.add_member(member_id, name, password)
+            elif choice == '4':
+                library.view_books()
+            elif choice == '5':
+                break
 
 
 def user_menu(library):
