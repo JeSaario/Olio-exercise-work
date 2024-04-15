@@ -77,3 +77,9 @@ class Database:
         if member and member.password == password:
             return member
         return None
+    
+    def get_books(self):
+        """
+        Retrieve all books stored in the database.
+        """
+        return self.books

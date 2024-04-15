@@ -20,12 +20,12 @@ class Member:
 class Library:
     def __init__(self, db):
         self.db = db  #Database object for data persistence
-        self.members = {}  #Dictionary to store members with member_id as the key
-        self.books = []  #List to store books
+        self.members = {}  #store members with member_id as the key
+        self.books = [] 
 
     def add_book(self, title, author):
         self.db.add_book(Book(title, author))  #Add to database
-        self.books.append(Book(title, author))  #Add to the library
+        self.books.append(Book(title, author))  #Add to library
 
     def add_member(self, member_id, name, password):
         self.db.add_member(Member(member_id, name, password))  #Add a new member to the database
@@ -34,24 +34,27 @@ class Library:
     def borrow_book(self, title, member_id):
         book = next((b for b in self.books if b.title == title and not b.borrowed), None)  #Find the book with the given title that is not currently borrowed
         if book:
-            book.borrowed = True  #Mark the book as borrowed
+            book.borrowed = True
             self.members[member_id].loans.append(book)  #Add the book to the member's list of loans
             return True
-        return False  #if the book is not available or does not exist
+        return False  
 
     def return_book(self, title, member_id):
         book = next((b for b in self.members[member_id].loans if b.title == title), None)  #Find the book with the given title in the member's list of loans
         if book:
-            book.borrowed = False  #Mark the book as not borrowed
+            book.borrowed = False  
             self.members[member_id].loans.remove(book)  # Remove the book from the member's list of loans
             return True
-        return False  #member did not borrow the book or it does not exist
+        return False
 
     def search_books(self, query=""):
         return self.db.search_books(query)  #Search for books in the database based on the given query
 
     def validate_member(self, member_id, password):
-        member = self.members.get(member_id)  #Get the member with the given member_id
+        member = self.members.get(member_id)
         if member and member.password == password:  #Check if the member exists and the password is correct
             return member
         return None
+    
+    def get_all_books(self): 
+        return self.db.get_books()  #Retrieve all books in the library

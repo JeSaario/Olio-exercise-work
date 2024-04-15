@@ -23,8 +23,8 @@ def admin_menu(library):
             password = getpass("Enter a password: ")
             library.add_member(member_id, name, password)
         elif choice == '3':
-            #Displaying all books in the library
-            books = library.search_books()
+            books = library.get_all_books()  #get all books
+            print("\nAll Books:")
             for book in books:
                 print(f"{book.title} by {book.author} - {'Borrowed' if book.borrowed else 'Available'}")
         elif choice == '4':
@@ -40,7 +40,8 @@ def user_menu(library):
             print("\nUser Menu:")
             print("1. Borrow a book")
             print("2. Return a book")
-            print("3. Exit")
+            print("3. View all books")
+            print("4. Exit")
             choice = input("Choose an action: ")
             if choice == '1':
                 #book borrow
@@ -57,6 +58,11 @@ def user_menu(library):
                 else:
                     print("You did not borrow this book or it does not exist.")
             elif choice == '3':
+                books = library.get_all_books()  #get all books
+                print("\nAll Books:")
+                for book in books:
+                    print(f"{book.title} by {book.author}")
+            elif choice == '4':
                 break
     else:
         print("Invalid credentials.")
