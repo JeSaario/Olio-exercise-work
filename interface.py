@@ -30,12 +30,12 @@ def admin_menu(library):
                 title = input("Enter the book title: ")
                 author = input("Enter the author: ")
                 book_type = "fiction"
-                library.add_book(title, author, book_type)  # Specify book type as fiction
+                library.add_book(title, author, book_type)  #Specify book type as fiction
             elif choice == '2':
                 title = input("Enter the book title: ")
                 author = input("Enter the author: ")
-                book_type = "nonfiction"
-                library.add_book(title, author, book_type)  # Specify book type as non-fiction
+                #book_type = "nonfiction"
+                library.add_book(title, author, "nonfiction")  #Specify book type as non-fiction
             elif choice == '3':
                 member_id = input("Enter the member ID: ")
                 name = input("Enter the member name: ")

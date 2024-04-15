@@ -18,15 +18,17 @@ class Library:
         """
         Add a new book to the library and database if it does not already exist.
         """
+        print(f"Received book type: {book_type}")  # Debug print
+
         # Check if the book already exists in any form
         if any(b.title == title and b.author == author for b in self.books):
             print("Book already exists in the library.")
             return
 
         # Create the appropriate book instance based on book_type
-        if book_type == "fiction":
+        if book_type.lower() == "fiction":  # Convert to lowercase for comparison
             new_book = FictionBook(title, author, "Fiction")
-        elif book_type == "nonfiction":
+        elif book_type.lower() == "nonfiction":  # Convert to lowercase for comparison
             new_book = NonFictionBook(title, author, "Non-Fiction")
         else:
             raise ValueError("Invalid book type specified.")
@@ -82,12 +84,12 @@ class Library:
         """
         Add a new book to the library and database if it does not already exist.
         """
-        # Check if a book with the same title and author exists
+        #Check if a book with the same title and author exists
         if any(b.title == title and b.author == author for b in self.books):
             print("Book already exists in the library.")
             return
 
-        if book_type.lower() == "fiction":
+        if book_type.lower() == "fiction": #Convert book_type to lowercase for comparison
             new_book = FictionBook(title, author, "Fiction")
         elif book_type.lower() == "non-fiction":
             new_book = NonFictionBook(title, author, "Non-Fiction")
@@ -95,8 +97,8 @@ class Library:
             print("Invalid book type.")
             return
 
-        self.db.add_book(new_book)  # Add to database
-        self.books.append(new_book)  # Add to library
+        self.db.add_book(new_book)  #Add to database
+        self.books.append(new_book)  #Add to library
         print("Book added successfully.")
 
     def view_books(self):
@@ -111,4 +113,11 @@ class Library:
                 book_type = "Non-Fiction"
             else:
                 book_type = "Unknown Type"
-            print(f"{book.title} by {book.author} - Type: {book_type}")
+
+  # Check if the book is borrowed
+            if book.borrowed:
+                availability = f"Borrowed by {book.borrower.name}"
+            else:
+                availability = "Available"
+
+            print(f"{book.title} by {book.author} - Type: {book_type} - Status: {availability}")
