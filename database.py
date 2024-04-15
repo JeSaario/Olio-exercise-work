@@ -8,7 +8,7 @@ class Book:
         self.borrowed = False # Initialize book as available
         #self.due_date = None
 
-    def borrow_book(self):
+    """def borrow_book(self):
         if not self.borrowed:
             self.borrowed = True
             return True
@@ -18,7 +18,7 @@ class Book:
         if self.borrowed:
             self.borrowed = False
             return True
-        return False
+        return False"""
 
 class FictionBook(Book):
     def __init__(self, title, author, genre):

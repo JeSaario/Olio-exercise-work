@@ -64,5 +64,5 @@ class Library:
             if not book.borrowed:
                 status = "Available"
             else:
-                status = "Borrowed by: " + book.borrower.name if book.borrower else "Unknown"
+                status = f"Borrowed by: {book.borrower.name}" if book.borrower else "Borrowed (Unknown)"
             print(f"{book.title} by {book.author} - {status}")
