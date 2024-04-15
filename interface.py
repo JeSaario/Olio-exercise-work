@@ -2,8 +2,8 @@ from library_system import Library
 from getpass import getpass
 
 
+
 def admin_menu(library, books):
-    #Displaying the admin menu and handling user input
     while True:
         print("\nAdmin Menu:")
         print("1. Add a new book")
@@ -12,7 +12,7 @@ def admin_menu(library, books):
         print("4. Return to main menu")
         choice = input("Choose an action: ")
         if choice == '1':
-            #Getting book details and adding a new book to the library
+        #Getting book details and adding a new book to the library
             title = input("Enter the book title: ")
             author = input("Enter the author: ")
             library.add_book(title, author)
@@ -28,6 +28,7 @@ def admin_menu(library, books):
                 print(f"{book.title} by {book.author} - {'Borrowed' if book.borrowed else 'Available'}")
         elif choice == '4':
             break
+
 
 def user_menu(library, books):
     #Handling user login and displaying the user menu
@@ -65,9 +66,10 @@ def user_menu(library, books):
     else:
         print("Invalid credentials.")
 
+
 def main(library):
-    books = library.get_all_books() #Retrieves all of the books
-    #Displaying the main menu and handling user input
+    # Retrieve all books once
+    books = library.get_all_books()
     while True:
         print("\nMain Menu:")
         print("1. Admin")
@@ -75,12 +77,13 @@ def main(library):
         print("3. Exit")
         choice = input("Enter your role or exit: ")
         if choice == '1':
-            admin_menu(library, books)
+            admin_menu(library, books)  # Pass books to admin menu
         elif choice == '2':
-            user_menu(library, books)
+            user_menu(library, books)  # Pass books to user menu
         elif choice == '3':
             print("Exiting...")
             break
+
 
 if __name__ == "__main__":
     from database import Database

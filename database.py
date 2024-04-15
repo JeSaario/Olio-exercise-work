@@ -90,8 +90,8 @@ class Database:
             return member
         return None
         
-    def get_books(self):
+    def get_all_books(self):
         """
         Retrieve all books stored in the database.
         """
-        return self.books
+        return list(set(self.books))  # Use a set to remove duplicates and then convert back to a list

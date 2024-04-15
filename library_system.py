@@ -21,11 +21,17 @@ class Library:
     def __init__(self, db):
         self.db = db  #Database object for data persistence
         self.members = {}  #store members with member_id as the key
-        self.books = self.db.get_books()  #Load books from the database
+        self.books = self.db.get_all_books()  #Load books from the database
 
     def add_book(self, title, author):
-        self.db.add_book(Book(title, author))  #Add to database
-        self.books.append(Book(title, author))  #Add to library
+        """
+        Add a new book to the library and database if it does not already exist.
+        """
+        new_book = Book(title, author)
+        if not any(b.title == new_book.title for b in self.books):
+            self.db.add_book(new_book)  # Add to database
+            self.books.append(new_book)  # Add to library
+
 
     def add_member(self, member_id, name, password):
         self.db.add_member(Member(member_id, name, password))  #Add a new member to the database
