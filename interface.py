@@ -20,27 +20,24 @@ def admin_menu(library):
         return
     while True:
         print("\nAdmin Menu:")
-        print("1. Add a new book")
-        print("2. Add a new member")
+        print("1. Add a new fiction book")
+        print("2. Add a new non-fiction book")
         print("3. View all books")
         print("4. Return to main menu")
         choice = input("Choose an action: ")
         if choice == '1':
-            #Getting book details and adding a new book to the library
             title = input("Enter the book title: ")
             author = input("Enter the author: ")
-            library.add_book(title, author)  # Pass title and author to add_book method in Library
+            library.add_book(title, author, "fiction")  # Specify book type as fiction
         elif choice == '2':
-            #Getting member details and adding a new member to the library
-            member_id = input("Enter the member ID: ")
-            name = input("Enter the member name: ")
-            password = getpass("Enter a password: ")
-            library.add_member(member_id, name, password)  #add member details to add_member method in Library
+            title = input("Enter the book title: ")
+            author = input("Enter the author: ")
+            library.add_book(title, author, "nonfiction")  # Specify book type as non-fiction
         elif choice == '3':
-            print("\nAll Books:")
-            library.view_books()  #Call view_books method in Library to display all books
+            library.view_books()
         elif choice == '4':
             break
+
 
 def user_menu(library):
     #Handle user login and display the user menu

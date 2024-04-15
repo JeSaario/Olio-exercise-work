@@ -91,8 +91,9 @@ class Library:
 
     def view_books(self):
         for book in self.books:
+            book_type = "Fiction" if isinstance(book, FictionBook) else "Non-Fiction"
             if not book.borrowed:
                 status = "Available"
             else:
                 status = f"Borrowed by: {book.borrower.name}" if book.borrower else "Borrowed (Unknown)"
-            print(f"{book.title} by {book.author} - {status}")
+            print(f"{book.title} by {book.author} - {status} - {book_type}")
