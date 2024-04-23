@@ -38,7 +38,18 @@ class Library:
         self.books.append(new_book)
         print("Book added successfully.")
 
-    
+    def return_book(self, title):
+        """
+        Return a book to the library, marking it as not borrowed.
+        """
+        for book in self.books:
+            if book.title == title and book.borrowed:
+                book.return_book()  # This method should mark the book as not borrowed and clear borrower details
+                self.db.update_book(book)  # Assuming there is a method to update the book in the database
+                print(f"Returned book successfully: {title}")
+                return True
+        print(f"Book not found or not borrowed: {title}")
+        return False
 
     def add_member(self, member_id, name, password):
         """

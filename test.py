@@ -1,22 +1,24 @@
-"""import unittest
-from unittest.mock import patch
-from io import StringIO
-from main import main, library
+import unittest
+from datetime import datetime
 
-class TestMain(unittest.TestCase):
+# Assuming these imports are from your actual project structure
+from library_system import Library, Member
+from database import Database
+
+# Test class for member management
+class TestMemberManagement(unittest.TestCase):
     def setUp(self):
-        # Add initial books to the library for testing
-        library.add_book("Harry Potter", "J.K. Rowling", "fiction")
-        library.add_book("Python Programming", "Guido van Rossum", "non-fiction")
+        # Initialize the Database and Library with the actual Database
+        self.db = Database()
+        self.library = Library(self.db)
 
-    @patch('builtins.input', side_effect=['1', 'Book Title', 'Author', 'fiction', '5'])
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_add_book_and_exit(self, mock_stdout, mock_input):
-        main(library)
-        self.assertEqual(mock_stdout.getvalue().strip(), "Book added successfully.")
+    def test_add_member(self):
+        # Test adding a new member using the actual database and library system
+        result = self.library.add_member("001", "John Doe", "securepassword")
+        self.assertTrue(result)
+        self.assertIn("001", self.library.members)
+        self.assertEqual(self.library.members["001"].name, "John Doe")
 
-    # Add more test cases as needed
-
+# Run tests
 if __name__ == "__main__":
     unittest.main()
-"""
